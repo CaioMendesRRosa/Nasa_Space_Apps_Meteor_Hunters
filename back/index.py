@@ -67,9 +67,11 @@ def craterCalc(meteorDiameter, v_imp, isSoil=True):
     finalCraterDiameter = 1.25 * craterDiameter if craterDiameter < 3200 else \
     ( math.pow(craterDiameter, 1.13) / ( math.pow(3200, 0.13 ) )) * 1.17
 
-    print(craterDiameter, finalCraterDiameter)
+    craterDepth = craterDiameter / (2 * math.sqrt(2))
 
-    TsunamiCalc(craterDiameter)
+    print(craterDiameter, finalCraterDiameter, craterDepth)
+
+    TsunamiCalc(craterDiameter, craterDepth, meteorDiameter)
 
 
 def EarthQuakeCalc (energy):
@@ -81,11 +83,24 @@ def EarthQuakeCalc (energy):
     print(Epicenter)
 
 
-def TsunamiCalc (craterDiameter):
+def TsunamiCalc (craterDiameter, craterDepth, meteorDiameter):
 
-    tsunamiHeight = min(craterDiameter / 14.1, 4000)
+    tsunamiHeight = 0.06 * min(craterDepth, 4000)
 
-    print(tsunamiHeight, 10 * craterDiameter)
+    q = 3 * math.exp(-0.8 * meteorDiameter / 4000)
+
+    radius = 34700
+
+    Rcw = (5 * craterDiameter / 2)
+
+    print(Rcw)
+
+    tsunamiHeightFar = 0
+
+    if radius > Rcw:
+        tsunamiHeightFar = tsunamiHeight * math.pow(  (Rcw / radius ), q )
+
+    print(tsunamiHeight, 10 * craterDiameter, tsunamiHeightFar)
 
 
 @app.route('/api/allmeteors', methods=['GET'])
@@ -95,10 +110,6 @@ def ApiSentryAllMeteors():
     respMeteor = response.json()
 
     print(len(respMeteor["data"]))
-
-    for i in respMeteor["data"]:
-        if float(i["diameter"]) > 1.2:
-            print(i["des"])
 
     if response.status_code == 200:
         data = response.json()
