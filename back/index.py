@@ -39,12 +39,24 @@ def ApiSentry():
     return jsonify({"error": response.status_code}), response.status_code
 
 
-def craterCalc(meteorDiamenter, im):
+def craterCalc(meteorDiameter, energyImpact, v_imp, isSoil):
 
     meteorDensity = 2600
     soilDensity = 2500
     waterDensity = 1000
     gravity = 9.8
+
+    v_imp *= 1000
+
+    soilConstant = 1,161
+    waterConstant = 1,365
+
+    auxConstant = soilConstant if isSoil else waterConstant
+    auxDensity = soilDensity if isSoil else waterDensity
+
+    
+    craterDiameter = auxConstant * ( (meteorDensity / auxDensity) ** 1.0/3.0 ) * ( (gravity * meteorDiameter / (v_imp * v_imp) ) ** -0.22 ) * (meteorDiameter ** 0.78)
+
 
 
 
