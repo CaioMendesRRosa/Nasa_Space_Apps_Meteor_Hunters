@@ -50,12 +50,15 @@ def ApiConsequences ():
     velocity = float(request.headers.get('velocity'))
     energy = float(request.headers.get('energy'))
     diameter = float(request.headers.get('diameter'))
+    isSoil = bool(request.headers.get('isSoil'))
+
+    print(isSoil)
 
     print("opa")
 
     data = {}
 
-    tsunamiHeight, waveWidth, tsunamiHeightFar, craterDiameter, finalCraterDiameter, craterDepth = craterCalc(diameter, velocity)
+    tsunamiHeight, waveWidth, tsunamiHeightFar, craterDiameter, finalCraterDiameter, craterDepth = craterCalc(diameter, velocity, isSoil)
 
     epicenter = EarthQuakeCalc(energy)
 
