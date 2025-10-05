@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './App.css'; // O CSS não muda
 import axios from "axios";
 import type { meteor, consequences } from "./interface/interfaces"
+import MeteorAnimation from "./MeteorAnimation"
 
 // --- Definições de Tipos (TypeScript) ---
 
@@ -98,6 +99,7 @@ const App: React.FC = () => {
   const [meteorInformations, setMeteorInformations] = useState<meteor | undefined>();
   const [consequences, setConsequences] = useState<consequences | undefined>();
   const [impact, setImpact] = useState<Boolean>(false);
+  const [showImpacts, setShowImpacts] = useState<Boolean>(false);
 
   const calculateTrajectory = useCallback(() => {
 
@@ -223,12 +225,8 @@ const App: React.FC = () => {
           value={Number((Number(meteorInformations.v_imp)).toFixed(2))}
           unit="Km/s"
         /> }
-        { meteorSelected &&
-        <button className="calculate-btn" onClick={calculateTrajectory}>
-          🚀 CALCULAR IMPACTO
-        </button> }
 
-        {consequences && impact && <ResultsPanel consequences={consequences} />}
+        {consequences && showImpacts && <ResultsPanel consequences={consequences} />}
       </div>
 
       <div className="main-display">
@@ -241,11 +239,7 @@ const App: React.FC = () => {
         </div>
 
         <div className="earth-display">
-          <div className="earth-map">
-            <div className="continent continent-1"></div>
-            <div className="continent continent-2"></div>
-            <div className="continent continent-3"></div>
-          </div>
+          <MeteorAnimation setShowImpacts={setShowImpacts} radius={Number(consequences?.craterDiameter)} />
           
           {isSimulating && (
             <>
