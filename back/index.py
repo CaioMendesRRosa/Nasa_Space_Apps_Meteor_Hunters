@@ -62,6 +62,7 @@ def ApiConsequences ():
 
     epicenter = EarthQuakeCalc(energy)
 
+    data["energy"] = energy
     data["tsunamiHeight"] = tsunamiHeight
     data["waveWidth"] = waveWidth
     data["tsunamiHeightFar"] = tsunamiHeightFar

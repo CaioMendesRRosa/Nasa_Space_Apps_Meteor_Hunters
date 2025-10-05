@@ -7,6 +7,7 @@ export interface meteor {
 
 export interface consequences {
     "tsunamiHeight" : string, 
+    "energy" : string, 
     "waveWidth" : string,
     "tsunamiHeightFar" : string,
     "craterDiameter" : string, 
