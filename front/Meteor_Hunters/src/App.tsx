@@ -24,7 +24,7 @@ interface Results {
 
 // Tipos para as props do painel de resultados
 interface ResultsPanelProps {
-  results: Results;
+  consequences: consequences;
 }
 
 // Tipo para o objeto de nível de ameaça
@@ -51,24 +51,33 @@ const ControlSlider: React.FC<ControlSliderProps> = ({ label, value, unit }) => 
 }
 
 // Componente para o painel de resultados, com props tipadas
-const ResultsPanel: React.FC<ResultsPanelProps> = ({ results }) => {
+const ResultsPanel: React.FC<ResultsPanelProps> = ({ consequences : consequences }) => {
   return (
     <div className="results-panel">
       <div className="result-item">
-        <span className="result-label">Energia de Impacto:</span>
-        <span className="result-value">{results.impactEnergy}</span>
+        <span className="result-label">Diâmetro da Cratera (Metros):</span>
+        <span className="result-value">{Number(consequences.craterDiameter).toFixed(2)}</span>
       </div>
       <div className="result-item">
-        <span className="result-label">Diâmetro da Cratera:</span>
-        <span className="result-value">{results.craterDiameter}</span>
+        <span className="result-label">Diâmetro final da Cratera (Metros):</span>
+        <span className="result-value">{Number(consequences.finalCraterDiameter).toFixed(2)}</span>
       </div>
       <div className="result-item">
-        <span className="result-label">Status da Deflexão:</span>
-        <span className="result-value">{results.deflectionStatus}</span>
+        <span className="result-label">Profundidade da Cratera (Metros):</span>
+        <span className="result-value">{Number(consequences.craterDepth).toFixed(2)}</span>
       </div>
       <div className="result-item">
-        <span className="result-label">Distância de Desvio:</span>
-        <span className="result-value">{results.missDistance}</span>
+        <span className="result-label">Altura da onda gerada no impacto (Metros):</span>
+        <span className="result-value">{Number(consequences.tsunamiHeight).toFixed(2)}</span>
+      </div>
+      { Number(consequences.tsunamiHeightFar) > 0.1 &&
+      <div className="result-item">
+        <span className="result-label">Altura da onda a 50Km (Metros): </span>
+        <span className="result-value">{Number(consequences.tsunamiHeightFar).toFixed(2)}</span>
+      </div> }
+      <div className="result-item">
+        <span className="result-label">Magnitude do terremoto (Escala Richter):</span>
+        <span className="result-value">{Number(consequences.epicenter).toFixed(2)}</span>
       </div>
     </div>
   );
@@ -88,35 +97,12 @@ const App: React.FC = () => {
   const [meteorSelected, setmeteorSelected] = useState<meteor | undefined>();
   const [meteorInformations, setMeteorInformations] = useState<meteor | undefined>();
   const [consequences, setConsequences] = useState<consequences | undefined>();
+  const [impact, setImpact] = useState<Boolean>(false);
 
   const calculateTrajectory = useCallback(() => {
-    setIsSimulating(false);
 
-    const mass = Math.pow(diameter / 100, 3) * 2000;
-    const energy = 0.5 * mass * Math.pow(velocity * 1000, 2) / 1e15;
-    const craterDiameter = Math.pow(energy, 0.25) * 50;
-    const deflected = deflection >= 1.5;
-    const missDistance = deflected ? deflection * 10000 : 0;
+    setImpact(true);
 
-    setResults({
-      impactEnergy: `${energy.toFixed(2)} TJ`,
-      craterDiameter: `${craterDiameter.toFixed(0)} metros`,
-      deflectionStatus: deflected ? 'SUCESSO' : 'FALHA',
-      missDistance: `${missDistance.toFixed(0)} km`,
-    });
-
-    let newThreat: Threat;
-    if (energy > 100) newThreat = { level: 'CRÍTICO', color: '#ff4444' };
-    else if (energy > 10) newThreat = { level: 'ALTO', color: '#ffa500' };
-    else if (energy > 1) newThreat = { level: 'MODERADO', color: '#ffff00' };
-    else newThreat = { level: 'BAIXO', color: '#00ff88' };
-    setThreat(newThreat);
-    
-    setIsDeflected(deflected);
-
-    setTimeout(() => {
-        setIsSimulating(true);
-    }, 100);
   }, [diameter, velocity, deflection]);
 
   const fetchMeteors = async () => {
@@ -134,6 +120,8 @@ const App: React.FC = () => {
 
   const handleClick = (meteor: meteor) => {
       console.log("Meteor selecionado:", meteor);
+
+      setImpact(false);
       
       setmeteorSelected(meteor);
   };
@@ -193,8 +181,8 @@ const App: React.FC = () => {
     <div className="container">
       <div className="control-panel">
         <div className="header">
-          <div className="logo">🛡️ ASTROGUARD</div>
-          <div className="subtitle">Sistema de Deflexão de Asteroides</div>
+          <div className="logo">ASTROIMPACTS</div>
+          <div className="subtitle">Sistema de Simulação de Impactos de Asteróides</div>
         </div>
 
         <div className="meteor-list">
@@ -234,12 +222,12 @@ const App: React.FC = () => {
           value={Number((Number(meteorInformations.v_imp)).toFixed(2))}
           unit="Km/s"
         /> }
-
+        { meteorSelected &&
         <button className="calculate-btn" onClick={calculateTrajectory}>
-          🚀 CALCULAR TRAJETÓRIA
-        </button>
+          🚀 CALCULAR IMPACTO
+        </button> }
 
-        {results && <ResultsPanel results={results} />}
+        {consequences && impact && <ResultsPanel consequences={consequences} />}
       </div>
 
       <div className="main-display">
@@ -270,7 +258,7 @@ const App: React.FC = () => {
 
         {isSimulating && isDeflected && (
             <div className="mitigation-success show">
-                ✅ DEFLEXÃO BEM-SUCEDIDA - TERRA PROTEGIDA
+              
             </div>
         )}
       </div>

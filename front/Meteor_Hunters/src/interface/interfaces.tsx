@@ -11,5 +11,6 @@ export interface consequences {
     "tsunamiHeightFar" : string,
     "craterDiameter" : string, 
     "finalCraterDiameter" : string, 
-    "craterDepth" : string;
+    "craterDepth" : string,
+    "epicenter" : string;
 }
