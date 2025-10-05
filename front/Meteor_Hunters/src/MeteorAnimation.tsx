@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Viewer, Entity } from "resium";
 import { Cartesian3, Color, Math as CesiumMath, Matrix4, Ion } from "cesium";
+import { createWorldImageryAsync, IonResource, IonImageryProvider, SceneMode, IonWorldImageryStyle   } from "cesium";
+import { sampleTerrainMostDetailed, createWorldTerrainAsync, Cartographic } from "cesium";
 
 interface MeteorAnimationProps {
   radius: number, // usa 'number' (com n minúsculo), não 'Number'
@@ -14,10 +16,23 @@ export default function MeteorAnimation({ radius, setShowImpacts }: MeteorAnimat
   const key = import.meta.env.VITE_cesium_Key;
 
   useEffect(() => {
+  Ion.defaultAccessToken = key;
+
+  (async () => {
+    const imageryProvider = await createWorldImageryAsync({
+      style: IonWorldImageryStyle.AERIAL_WITH_LABELS,
+    });
+
+    viewerRef.current?.cesiumElement.imageryLayers.removeAll();
+    viewerRef.current?.cesiumElement.imageryLayers.addImageryProvider(imageryProvider);
+  })();
+}, []);
+
+  useEffect(() => {
     Ion.defaultAccessToken = key;
   }, []);
 
-  const handleClick = (e: any) => {
+  const handleClick = async (e: any) => {
 
     if (!radius) return;
 
@@ -31,6 +46,16 @@ export default function MeteorAnimation({ radius, setShowImpacts }: MeteorAnimat
     const cartographic = scene.globe.ellipsoid.cartesianToCartographic(cartesian);
     const lon = CesiumMath.toDegrees(cartographic.longitude);
     const lat = CesiumMath.toDegrees(cartographic.latitude);
+
+    const terrainProvider = await createWorldTerrainAsync();
+    const [terrainSample] = await sampleTerrainMostDetailed(terrainProvider, [
+      new Cartographic(cartographic.longitude, cartographic.latitude),
+    ]);
+    const terrainHeight = terrainSample.height ?? 0;
+
+    const isWater = terrainHeight < 0; 
+
+    console.log(isWater)
 
     // --- Cratera ---
     const position = Cartesian3.fromDegrees(lon, lat, 0);
