@@ -109,9 +109,10 @@ const App: React.FC = () => {
 
     try {
       const response = await axios.get("http://localhost:5000/api/allmeteors");
-      console.log(response.data.data);
-      setMeteors(response.data.data);
-      console.log(response.data);
+
+      const meteosSorted = response.data.data.sort((a : meteor, b : meteor) => Number(b.diameter) - Number(a.diameter));
+
+      setMeteors(meteosSorted);
     } catch (error) {
       console.error("Erro ao buscar meteoros:", error);
     }

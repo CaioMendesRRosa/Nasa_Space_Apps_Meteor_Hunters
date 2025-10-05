@@ -400,30 +400,33 @@ body {
 }
 
 .meteor-list {
+  /* Foco na consistência do layout e espaçamento */
+  width: 92%;
   margin-top: 20px;
   background: rgba(255,255,255,0.05);
-  padding: 10px;
+  padding: 20px 15px; /* Ajuste o padding para dar espaço ao conteúdo */
   border-radius: 20px;
   color: #fff;
   max-height: 400px;
-  overflow-y: auto; 
-  flex: auto;
-  flex-direction: column;
-  align-items: center; 
-  padding: 0;
+  overflow-y: auto;
+  /* Removi flex auto/direction aqui, pois o contêiner interno deve lidar com isso */
   margin-bottom: 10px;
+  border: 1px solid rgba(255,255,255,0.1); /* Borda sutil */
 }
 
-.meteor-list ul {
-  list-style: none;
-  padding: 0;
+.h3-meteor {
+  font-size: 1.4rem;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 0; /* Garante que não há espaço extra no topo */
+  margin-bottom: 15px; /* Espaço após o título */
 }
 
-.meteor-list li {
-  margin: 5px 0;
-}
-
-.meteor-list ul {
+.meteorUl {
+  flex: auto;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -433,30 +436,44 @@ body {
   margin-bottom: 8px;
 }
 
-.meteor-btn {   /* botão se ajusta ao conteúdo */
-  width: 40%;
-  margin-left: 1rem;
-  border-radius: 6px;
+.meteor-btn {
+  /* Botão preenche o contêiner e tem padding confortável */
+  width: 50%; /* Ocupa toda a largura */
+  padding: 10px 15px; /* Mais espaço vertical e horizontal */
+  border-radius: 8px; /* Ligeiramente mais arredondado */
   border: none;
-  background-color: #2f2f2f;
+  background-color: #3a3a3a; /* Cor de fundo mais definida */
+  color: inherit; /* Garante que a cor do texto é branca */
   cursor: pointer;
+  text-align: center; /* Centraliza o texto */
+  font-weight: 500;
   transition: all 0.2s ease-in-out;
 }
 
 .meteor-btn:hover {
-  background-color: rgba(32, 92, 64, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  /* Efeito de hover mais limpo */
+  background-color: #555555; /* Um cinza mais claro */
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
 }
 
 .meteor-btn:active {
-  transform: scale(0.97);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transform: scale(0.98);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
-.meteorUl {
-  flex: auto;
-  flex-direction: column;
+/* Opcional: Estilo da barra de rolagem para navegadores WebKit (Chrome, Safari) */
+.meteor-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.meteor-list::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 10px;
+}
+
+.meteor-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .meteor-second-list {
