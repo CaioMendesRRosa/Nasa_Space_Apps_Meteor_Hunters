@@ -15,17 +15,34 @@ body {
     height: 100vh;
 }
 
+.introduction {
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.introduction h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.introduction p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
 .container {
     display: flex;
     height: 100vh;
-    width: 100vw; /* Garante que o container ocupe a largura toda */
+    width:100vw; /* Garante que o container ocupe a largura toda */
     position: relative;
 }
 
 .control-panel {
     /* MUDANÇA PRINCIPAL AQUI */
-    flex: 0 0 30%; /* Não cresce, não encolhe, base de 30% */
-    max-width: 450px; /* Adiciona uma largura máxima para telas muito grandes */
+    flex: 0 0 40%; /* Não cresce, não encolhe, base de 30% */
+    max-width: 850px; /* Adiciona uma largura máxima para telas muito grandes */
     
     background: linear-gradient(180deg, #0f1419 0%, #1a2332 100%);
     border-right: 2px solid #00d4ff;
@@ -416,7 +433,6 @@ body {
 
 .h3-meteor {
   font-size: 1.4rem;
-  text-align: center;
   font-weight: bold;
   margin-top: 0; /* Garante que não há espaço extra no topo */
   margin-bottom: 15px; /* Espaço após o título */
@@ -489,7 +505,14 @@ body {
 }
 
 .meteor-selected {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.meteor-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .meteor-div-selected {

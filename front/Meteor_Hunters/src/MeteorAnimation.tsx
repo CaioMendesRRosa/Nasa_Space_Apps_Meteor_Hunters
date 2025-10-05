@@ -47,16 +47,6 @@ export default function MeteorAnimation({ radius, setShowImpacts }: MeteorAnimat
     const lon = CesiumMath.toDegrees(cartographic.longitude);
     const lat = CesiumMath.toDegrees(cartographic.latitude);
 
-    const terrainProvider = await createWorldTerrainAsync();
-    const [terrainSample] = await sampleTerrainMostDetailed(terrainProvider, [
-      new Cartographic(cartographic.longitude, cartographic.latitude),
-    ]);
-    const terrainHeight = terrainSample.height ?? 0;
-
-    const isWater = terrainHeight < 0; 
-
-    console.log(isWater)
-
     // --- Cratera ---
     const position = Cartesian3.fromDegrees(lon, lat, 0);
     const size = Math.floor(radius/2);
