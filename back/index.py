@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import requests
 import math
 
 app = Flask(__name__)
+CORS(app)
 
 sentryUrl = "https://ssd-api.jpl.nasa.gov/sentry.api"
 
@@ -43,6 +45,29 @@ def ApiSentry():
     
     return jsonify({"error": response.status_code}), response.status_code
 
+@app.route('/api/calcConsequences', methods=['GET'])
+def ApiConsequences ():
+    velocity = float(request.headers.get('velocity'))
+    energy = float(request.headers.get('energy'))
+    diameter = float(request.headers.get('diameter'))
+
+    print("opa")
+
+    data = {}
+
+    tsunamiHeight, waveWidth, tsunamiHeightFar, craterDiameter, finalCraterDiameter, craterDepth = craterCalc(diameter, velocity)
+
+    epicenter = EarthQuakeCalc(energy)
+
+    data["tsunamiHeight"] = tsunamiHeight
+    data["waveWidth"] = waveWidth
+    data["tsunamiHeightFar"] = tsunamiHeightFar
+    data["craterDiameter"] = craterDiameter
+    data["finalCraterDiameter"] = finalCraterDiameter
+    data["craterDepth"] = craterDepth
+    data["epicenter"] = epicenter
+
+    return jsonify(data)
 
 def craterCalc(meteorDiameter, v_imp, isSoil=True):
 
@@ -71,7 +96,9 @@ def craterCalc(meteorDiameter, v_imp, isSoil=True):
 
     print(craterDiameter, finalCraterDiameter, craterDepth)
 
-    TsunamiCalc(craterDiameter, craterDepth, meteorDiameter)
+    tsunamiHeight, waveWidth, tsunamiHeightFar = TsunamiCalc(craterDiameter, craterDepth, meteorDiameter)
+
+    return tsunamiHeight, waveWidth, tsunamiHeightFar, craterDiameter, finalCraterDiameter, craterDepth
 
 
 def EarthQuakeCalc (energy):
@@ -80,7 +107,7 @@ def EarthQuakeCalc (energy):
 
     Epicenter = 0.67 * math.log(energy, 10) - 5.87
 
-    print(Epicenter)
+    return Epicenter
 
 
 def TsunamiCalc (craterDiameter, craterDepth, meteorDiameter):
@@ -101,6 +128,10 @@ def TsunamiCalc (craterDiameter, craterDepth, meteorDiameter):
         tsunamiHeightFar = tsunamiHeight * math.pow(  (Rcw / radius ), q )
 
     print(tsunamiHeight, 10 * craterDiameter, tsunamiHeightFar)
+
+    waveWidth = 10 * craterDiameter
+
+    return tsunamiHeight, waveWidth, tsunamiHeightFar
 
 
 @app.route('/api/allmeteors', methods=['GET'])
