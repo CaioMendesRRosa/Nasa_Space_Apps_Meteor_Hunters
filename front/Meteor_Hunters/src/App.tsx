@@ -41,39 +41,40 @@ const LongTermEffectsPanel: React.FC<LongTermEffectsPanelProps> = ({ energyInMeg
     let effects: { title: string; text: string }[] = [];
 
     if (energyInMegatons >= 10 && energyInMegatons < 1000) {
-        scaleDescription = "um evento com potencial para causar alterações climáticas regionais a continentais.";
+        scaleDescription = "an event with the potential to cause regional to continental climate changes.";
         effects = [
-            { title: "Ejeção de Aerossóis", text: "Grande quantidade de poeira e aerossóis de enxofre são lançados na estratosfera, afetando o clima local e regional." },
-            { title: "Resfriamento Regional", text: "A luz solar é parcialmente bloqueada em uma vasta área, podendo causar uma queda de temperatura de alguns graus por meses." },
-            { title: "Chuvas Ácidas", text: "A vaporização de rochas ricas em enxofre pode levar à formação de chuvas ácidas, prejudicando a vegetação e ecossistemas aquáticos." },
+            { title: "Aerosol Ejection", text: "Large amounts of dust and sulfur aerosols are injected into the stratosphere, affecting local and regional climate." },
+            { title: "Regional Cooling", text: "Sunlight is partially blocked over a wide area, potentially causing a drop in temperature of several degrees for months." },
+            { title: "Acid Rain", text: "Vaporization of sulfur-rich rocks can lead to acid rain, harming vegetation and aquatic ecosystems." },
         ];
     } else if (energyInMegatons >= 1000 && energyInMegatons < 100000) {
-        scaleDescription = "um evento com potencial para desencadear um 'Inverno de Impacto' global.";
-         effects = [
-            { title: "Ejeção Massiva de Poeira", text: "Trilhões de toneladas de rocha pulverizada são lançadas na estratosfera, formando uma camada que envolve o planeta." },
-            { title: "Bloqueio Solar Global", text: "A camada de detritos bloqueia a maior parte da luz solar por meses, talvez anos, resultando em escuridão e frio intensos." },
-            { title: "Colapso da Fotossíntese", text: "A escuridão prolongada leva à morte em massa de plantas e plâncton, quebrando a base da maioria das cadeias alimentares." },
-            { title: "Queda Drástica de Temperatura", text: "As temperaturas globais caem drasticamente, podendo iniciar uma era do gelo repentina e dizimar espécies não adaptadas." },
+        scaleDescription = "an event with the potential to trigger a global 'Impact Winter.'";
+        effects = [
+            { title: "Massive Dust Ejection", text: "Trillions of tons of pulverized rock are launched into the stratosphere, forming a layer that encircles the planet." },
+            { title: "Global Sunlight Blockage", text: "The debris layer blocks most sunlight for months or even years, resulting in darkness and extreme cold." },
+            { title: "Photosynthesis Collapse", text: "Prolonged darkness leads to mass death of plants and plankton, disrupting the base of most food chains." },
+            { title: "Drastic Temperature Drop", text: "Global temperatures fall sharply, potentially triggering a sudden ice age and decimating unadapted species." },
         ];
     } else { // >= 100,000 MT
-        scaleDescription = "um evento de extinção em massa, com consequências geológicas catastróficas.";
+        scaleDescription = "a mass extinction event with catastrophic geological consequences.";
         effects = [
-            { title: "Inverno de Impacto Severo", text: "Escuridão e frio extremos por vários anos, levando a um colapso quase total dos ecossistemas terrestres e marinhos." },
-            { title: "Incêndios Globais", text: "Material ejetado reentrando na atmosfera aquece o ar a ponto de causar incêndios em florestas por todo o planeta." },
-            { title: "Mega-Tsunamis e Terremotos", text: "O impacto desencadeia terremotos de magnitude superior ou igual a 8 e tsunamis com centenas de metros de altura que varrem continentes." },
-            { title: "Alteração da Química Oceânica", text: "Chuvas extremamente ácidas e a deposição de metais pesados alteram a química dos oceanos, causando outra onda de extinções marinhas." },
+            { title: "Severe Impact Winter", text: "Extreme darkness and cold for several years, leading to near-total collapse of terrestrial and marine ecosystems." },
+            { title: "Global Fires", text: "Ejected material re-entering the atmosphere heats the air, causing fires in forests across the planet." },
+            { title: "Mega-Tsunamis and Earthquakes", text: "The impact triggers earthquakes of magnitude 8 or higher and tsunamis hundreds of meters high that sweep across continents." },
+            { title: "Ocean Chemistry Alteration", text: "Extremely acidic rain and deposition of heavy metals change ocean chemistry, causing another wave of marine extinctions." },
         ];
     }
 
+
     return (
         <div className="long-term-effects-panel">
-            <h3>Efeitos Globais do Impacto a Longo Prazo</h3>
+            <h3>Long-Term Global Effects of the Impact</h3>
             <p>
-                Com uma energia de <strong>{energyInMegatons.toFixed(2)} megatoneladas de TNT</strong>, o impacto é considerado {scaleDescription} e pode desencadear os seguintes efeitos:
+                With an energy of <strong>{energyInMegatons.toFixed(2)} megatons of TNT</strong>, the impact is considered {scaleDescription} and may trigger the following effects:
             </p>
             <div className="effects-column">
                 <div className="effects-header meteor-header">
-                    <h4><i className="fas fa-globe-americas"></i> Consequências Climáticas e Geológicas</h4>
+                    <h4><i className="fas fa-globe-americas"></i> Climatic and Geological Consequences </h4>
                 </div>
                 <ul className="effects-list">
                     {effects.map((effect, index) => (
@@ -121,67 +122,67 @@ const ControlSlider: React.FC<ControlSliderProps> = ({ label, value, unit }) => 
 
 const historicalEvents = [
   {
-    name: "Tunguska (1908, Rússia)",
-    type: "Explosão Aérea",
+    name: "Tunguska (1908, Russia)",
+    type: "Airburst",
     craterDiameter: 0,
     tsunamiHeight: 0,
     epicenter: 5.0,
     energy: 15, // Megatons
-    description: "Explosão aérea de ~15 MT que devastou 2.000 km² de floresta."
+    description: "Airburst of ~15 MT that devastated 2,000 km² of forest."
   },
   {
-    name: "Chicxulub (≈66 milhões de anos)",
-    type: "Impacto Terrestre",
-    craterDiameter: 180000, // Corrigido para 180km em metros
+    name: "Chicxulub (≈66 million years ago)",
+    type: "Land Impact",
+    craterDiameter: 180000, // 180 km in meters
     tsunamiHeight: 100,
     epicenter: 12,
-    energy: 100000000, // 100 Milhões de Megatons
-    description: "Meteoro que causou a extinção dos dinossauros, com energia de 100 milhões de megatoneladas."
+    energy: 100000000, // 100 million Megatons
+    description: "Asteroid that caused the dinosaur extinction, with energy of 100 million megatons."
   },
   {
-    name: "Bomba Tsar (1961, URSS)",
-    type: "Explosão Nuclear",
+    name: "Tsar Bomba (1961, USSR)",
+    type: "Nuclear Explosion",
     craterDiameter: 0,
     tsunamiHeight: 0,
     epicenter: 7.1,
     energy: 50, // 50 Megatons
-    description: "A mais potente bomba nuclear já detonada, com poder destrutivo de 50 megatoneladas."
+    description: "The most powerful nuclear bomb ever detonated, with destructive power of 50 megatons."
   },
   {
-    name: "Terremoto de Sumatra (2004)",
-    type: "Terremoto/Tsunami",
+    name: "Sumatra Earthquake (2004)",
+    type: "Earthquake/Tsunami",
     craterDiameter: 0,
     tsunamiHeight: 30,
     epicenter: 9.1,
-    energy: 23000, // Energia sísmica equivalente
-    description: "Terremoto submarino que gerou tsunami devastador no Oceano Índico."
+    energy: 23000, // Equivalent seismic energy
+    description: "Submarine earthquake that generated a devastating tsunami in the Indian Ocean."
   },
   {
-    name: "Terremoto de Kobe (1995, Japão)",
-    type: "Terrestre",
+    name: "Kobe Earthquake (1995, Japan)",
+    type: "Land",
     craterDiameter: 0,
     tsunamiHeight: 0,
     epicenter: 7.3,
     energy: 2,
-    description: "Terremoto de magnitude 7.3 que devastou a cidade de Kobe, no Japão."
+    description: "Magnitude 7.3 earthquake that devastated the city of Kobe, Japan."
   },
   {
-    name: "Impacto de Chelyabinsk (2013, Rússia)",
-    type: "Explosão Aérea",
+    name: "Chelyabinsk Impact (2013, Russia)",
+    type: "Airburst",
     craterDiameter: 0,
     tsunamiHeight: 0,
     epicenter: 2.0,
-    energy: 0.5, // 500 Kilotons
-    description: "Meteoro que explodiu com energia de ~0.5 MT, causando danos e ferimentos."
+    energy: 0.5, // 500 kilotons
+    description: "Meteor that exploded with ~0.5 MT energy, causing damage and injuries."
   },
   {
-    name: "Terremoto de Valdivia (1960, Chile)",
-    type: "Terrestre/Tsunami",
+    name: "Valdivia Earthquake (1960, Chile)",
+    type: "Land/Tsunami",
     craterDiameter: 0,
     tsunamiHeight: 25,
     epicenter: 9.5,
-    energy: 200000, // Energia sísmica equivalente
-    description: "Maior terremoto registrado, liberando energia equivalente a 200.000 megatoneladas."
+    energy: 200000, // Equivalent seismic energy
+    description: "Largest recorded earthquake, releasing energy equivalent to 200,000 megatons."
   }
 ];
 
@@ -221,17 +222,17 @@ const ComparisonPanel: React.FC<ComparisonPanelProps> = ({ consequences }) => {
 
   return (
     <div className="comparison-panel">
-      <h3>Comparativo com Eventos Históricos Semelhantes</h3>
+      <h3>Comparison with Similar Historical Events</h3>
       <ul>
         {similarEvents.map((event, i) => (
           <li key={i} className="historical-event">
             <strong>{event.name}</strong> - {event.description}
             <div>
               {event.energy > 0 && (
-                <span>Energia: {event.energy} MT | </span>
+                <span>Energy: {event.energy} MT | </span>
               )}
               {event.craterDiameter > 0 && (
-                <span>Cratera: {event.craterDiameter} m | </span>
+                <span>Crater: {event.craterDiameter} m | </span>
               )}
               {event.tsunamiHeight > 0 && (
                 <span>Tsunami: {event.tsunamiHeight} m | </span>
@@ -247,46 +248,47 @@ const ComparisonPanel: React.FC<ComparisonPanelProps> = ({ consequences }) => {
   );
 };
 
-const ResultsPanel: React.FC<ResultsPanelProps> = ({ consequences, clicouEmTerra }) => {
+const ResultsPanel: React.FC<ResultsPanelProps> = ({ consequences, clickedOnLand }) => {
   return (
     <div className="results-panel">
-      <h3>Consequências do Impacto</h3>
+      <h3>Impact Consequences</h3>
+      <p>Note: 1 megaton of TNT = 1 Billion Kilograms</p>
       <div className="result-item energy-item">
-        <span className="result-label">Energia Liberada (Megatoneladas de TNT):</span>
-        <span className="result-value">{Number(consequences.energy).toFixed(2)} </span>
+        <span className="result-label">Released Energy (Megatons of TNT):</span>
+        <span className="result-value">{Number(consequences.energy).toFixed(2)}</span>
       </div>
       <div className="result-item">
-        <span className="result-label">Diâmetro da Cratera (Metros):</span>
+        <span className="result-label">Crater Diameter (Meters):</span>
         <span className="result-value">{Number(consequences.craterDiameter).toFixed(2)}</span>
       </div>
       <div className="result-item">
-        <span className="result-label">Diâmetro final da Cratera (Metros):</span>
+        <span className="result-label">Final Crater Diameter (Meters):</span>
         <span className="result-value">{Number(consequences.finalCraterDiameter).toFixed(2)}</span>
       </div>
       <div className="result-item">
-        <span className="result-label">Profundidade da Cratera (Metros):</span>
+        <span className="result-label">Crater Depth (Meters):</span>
         <span className="result-value">{Number(consequences.craterDepth).toFixed(2)}</span>
       </div>
-      {Number(consequences.tsunamiHeight) > 0 && !clicouEmTerra && (
+      {Number(consequences.tsunamiHeight) > 0 && !clickedOnLand && (
         <div className="result-item">
           <span className="result-label">
-            <strong>Impacto no Mar:</strong> Altura da onda gerada pelo impacto (Metros)
+            <strong>Ocean Impact:</strong> Wave Height Generated by Impact (Meters)
           </span>
           <span className="result-value">{Number(consequences.tsunamiHeight).toFixed(2)}</span>
         </div>
       )}
-      {Number(consequences.tsunamiHeightFar) > 0.1 && !clicouEmTerra && (
+      {Number(consequences.tsunamiHeightFar) > 0.1 && !clickedOnLand && (
         <div className="result-item">
           <span className="result-label">
-            Altura da onda a 50Km do impacto (Metros):
+            Wave Height 50 km from Impact (Meters):
           </span>
           <span className="result-value">{Number(consequences.tsunamiHeightFar).toFixed(2)}</span>
         </div>
       )}
-      {Number(consequences.epicenter) > 0 && clicouEmTerra && (
+      {Number(consequences.epicenter) > 0 && clickedOnLand && (
         <div className="result-item">
           <span className="result-label">
-            <strong>Impacto em Terra Firme:</strong> Magnitude do terremoto (Escala Richter)
+            <strong>Land Impact:</strong> Earthquake Magnitude (Richter Scale)
           </span>
           <span className="result-value">{Number(consequences.epicenter).toFixed(2)}</span>
         </div>
@@ -294,6 +296,7 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ consequences, clicouEmTerra
     </div>
   );
 };
+
 
 // Componente principal
 const App: React.FC = () => {
@@ -356,15 +359,15 @@ const App: React.FC = () => {
     <div className="container">
       <div className="control-panel">
         <div className="header">
-          <div className="logo">ASTROIMPACTS</div>
-          <div className="subtitle">Sistema de Simulação de Impactos de Asteróides</div>
+          <div className="logo">METEOR HUNTERS</div>
+          <div className="subtitle">Asteroid Impact Simulation System</div>
         </div>
         <div className="introduction">
-          <h2>Bem-vindo ao ASTROIMPACTS</h2>
-          <p>Esta aplicação simula as consequências de impactos de asteroides monitorados pelo <strong>Centro Sentry da NASA</strong>. Explore os dados, selecione um meteoro e veja os resultados do impacto em terra ou no mar, comparando-os com eventos históricos e entendendo seus efeitos a longo prazo.</p>
+          <h2>Welcome to METEOR HUNTERS</h2>
+          <p>This application simulates the consequences of asteroid impacts monitored by <strong>NASA’s Sentry Center</strong>. Explore the data, select an asteroid, and see the impact results on land or at sea, comparing them with historical events and understanding their long-term effects.</p>
         </div>
 
-        <h3 className="h3-meteor">Meteoros Detectados</h3>
+        <h3 className="h3-meteor">Meteors Detected</h3>
         <div className="meteor-list">
           <div className="meteor-second-list">
             <ul className="meteorUl">
@@ -383,7 +386,7 @@ const App: React.FC = () => {
         </div>
 
         {meteorSelected && <div className='meteor-selected'>
-            <h3>Meteoro Selecionado</h3>
+            <h3>Meteor Selected</h3>
             <div className='meteor-div'>
               <div className="meteor-div-selected">
                   {meteorSelected.des}
@@ -392,25 +395,25 @@ const App: React.FC = () => {
         </div> }
         
         { meteorInformations &&
-        <ControlSlider
-          label="Diâmetro do Asteroide"
-          value={ Number((Number(meteorInformations.diameter) * 1000).toFixed(2))}
-          unit="Metros"
-        /> }
+          <ControlSlider
+            label="Asteroid Diameter"
+            value={ Number((Number(meteorInformations.diameter) * 1000).toFixed(2)) }
+            unit="Meters"
+          /> }
 
         { meteorInformations &&
-        <ControlSlider
-          label="Velocidade de Impacto"
-          value={Number((Number(meteorInformations.v_imp)).toFixed(2))}
-          unit="Km/s"
-        /> }
+          <ControlSlider
+            label="Impact Velocity"
+            value={ Number((Number(meteorInformations.v_imp)).toFixed(2)) }
+            unit="Km/s"
+          /> }
 
         { meteorInformations && 
-        <ControlSlider
-          label="Energia de Impacto Potencial"
-          value={Number(Number(meteorInformations.energy).toFixed(2))}
-          unit="Megatoneladas"
-        /> }
+          <ControlSlider
+            label="Potential Impact Energy"
+            value={ Number(Number(meteorInformations.energy).toFixed(2)) }
+            unit="Megatons"
+          /> }
 
         {consequences && showImpacts &&
         <div>
